@@ -1,0 +1,81 @@
+<header class="bg-mel px-6 py-6">
+  <div class="mx-auto flex max-w-5xl items-center justify-between gap-4">
+    <a
+      href="/painel"
+      class="font-semibold text-tinta underline decoration-tinta/30 decoration-2 underline-offset-4 hover:decoration-tinta focus-visible:outline-[3px] focus-visible:outline-tinta focus-visible:outline-offset-2"
+      >&larr; Colmeia</a
+    >
+    <h1 class="font-display text-2xl text-tinta sm:text-3xl">Minha trilha</h1>
+    <span class="w-20" aria-hidden="true"></span>
+  </div>
+</header>
+
+<main class="mx-auto max-w-5xl px-6 py-10">
+  <% if (trilha.length === 0) { %>
+    <section class="mx-auto max-w-md rounded-favo bg-cera p-8 text-center">
+      <img src="/img/beenie_vem.png" alt="" class="mx-auto h-32 w-auto" />
+      <h2 class="mt-4 font-display text-xl">Sua trilha ainda está sendo montada</h2>
+      <p class="mt-2 text-sm text-tinta-suave">
+        Assim que houver conteúdo para a sua idade, ele aparece aqui — e a Beenie te avisa.
+      </p>
+      <a
+        href="/painel"
+        class="mt-6 inline-block rounded-pilula bg-mel px-6 py-3 font-semibold text-tinta transition hover:bg-nectar focus-visible:outline-[3px] focus-visible:outline-tinta focus-visible:outline-offset-2"
+        >Voltar à Colmeia</a
+      >
+    </section>
+  <% } else { %>
+    <div class="grid gap-10 md:grid-cols-[minmax(0,1fr)_20rem] md:items-start">
+      <ol class="favo-trilha space-y-8">
+        <% trilha.forEach((favo) => { %>
+          <li><%- include('../partials/ui/favo-card', { favo }) %></li>
+        <% }) %>
+      </ol>
+
+      
+      <aside class="hidden md:block md:sticky md:top-8">
+        <div class="rounded-favo bg-cera p-6 shadow-md">
+          <% if (favoAtual) { %>
+            <p class="text-xs font-semibold uppercase tracking-wide text-tinta-suave">Continuar de onde parei</p>
+            <h2 class="mt-1 font-display text-2xl"><%= favoAtual.title %></h2>
+            <div
+              class="mt-4 h-3 overflow-hidden rounded-pilula bg-white"
+              role="progressbar"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="<%= favoAtual.percentual %>"
+              aria-label="Progresso do favo <%= favoAtual.title %>"
+            >
+              <div class="h-full rounded-pilula bg-mel <%= classeDaBarra(favoAtual.percentual) %>"></div>
+            </div>
+            <p class="mt-2 text-sm text-tinta-suave">
+              <%= favoAtual.celulasConcluidas %> de <%= favoAtual.celulasTotais || '?' %> células ·
+              <%= favoAtual.percentual %>%
+            </p>
+            <a
+              href="/trilha/<%= favoAtual.id %>"
+              class="mt-6 block rounded-pilula bg-mel px-6 py-3 text-center font-semibold text-tinta transition hover:bg-nectar focus-visible:outline-[3px] focus-visible:outline-tinta focus-visible:outline-offset-2"
+              >Continuar</a
+            >
+          <% } else { %>
+            <h2 class="font-display text-xl">Trilha completa!</h2>
+            <p class="mt-2 text-sm text-tinta-suave">
+              Você fechou todos os favos disponíveis para a sua idade. Conteúdo novo aparece aqui.
+            </p>
+          <% } %>
+
+          <img src="/img/beenie_howdy.png" alt="" class="mt-6 h-28 w-auto animate-float" />
+        </div>
+      </aside>
+    </div>
+
+    
+    <% if (favoAtual) { %>
+      <a
+        href="/trilha/<%= favoAtual.id %>"
+        class="fixed inset-x-6 bottom-6 z-10 rounded-pilula bg-mel px-6 py-4 text-center font-semibold text-tinta shadow-xl transition hover:bg-nectar focus-visible:outline-[3px] focus-visible:outline-tinta focus-visible:outline-offset-2 md:hidden"
+        >Continuar: <%= favoAtual.title %></a
+      >
+    <% } %>
+  <% } %>
+</main>

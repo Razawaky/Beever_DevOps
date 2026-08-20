@@ -1,0 +1,48 @@
+FROM node:22-slim AS build
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+
+RUN npm ci
+
+COPY src ./src
+
+RUN npm run css:build
+
+RUN npm prune --omit=dev && rm -rf node_modules/.cache node_modules/.package-lock.json
+
+FROM mysql:8.0-debian
+
+RUN set -eux; \
+    arch="$(dpkg --print-architecture)"; \
+    case "$arch" in \
+      amd64) node_arch="x64" ;; \
+      arm64) node_arch="arm64" ;; \
+      *) echo "Arquitetura $arch nao suportada" >&2; exit 1 ;; \
+    esac; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends curl ca-certificates xz-utils; \
+    curl -fsSL -o /tmp/node.tar.xz "https://nodejs.org/dist/v22.14.0/node-v22.14.0-linux-${node_arch}.tar.xz"; \
+    tar -xJf /tmp/node.tar.xz -C /usr/local --strip-components=1; \
+    rm -f /tmp/node.tar.xz; \
+    apt-get purge -y curl xz-utils; \
+    apt-get autoremove -y; \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/src ./src
+COPY migrations ./migrations
+COPY scripts ./scripts
+
+COPY selfcontained-entrypoint.sh /usr/local/bin/beever-entrypoint.sh
+RUN chmod +x /usr/local/bin/beever-entrypoint.sh
+
+VOLUME /var/lib/mysql
+
+EXPOSE 3000 3306
+
+ENTRYPOINT ["/usr/local/bin/beever-entrypoint.sh"]

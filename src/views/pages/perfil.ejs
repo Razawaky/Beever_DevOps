@@ -1,0 +1,103 @@
+<div class="mx-auto max-w-3xl">
+  <div class="overflow-hidden rounded-favo bg-white shadow-xl">
+    <div class="flex items-center gap-4 bg-mel px-8 py-8">
+      <% if (perfil.avatar_imagem) { %>
+        <img src="<%= perfil.avatar_imagem %>" alt="" class="h-16 w-16 object-contain" />
+      <% } else { %>
+        <div class="flex h-16 w-16 items-center justify-center rounded-pilula bg-white/40 text-2xl font-bold">
+          <%= perfil.apelido.charAt(0).toUpperCase() %>
+        </div>
+      <% } %>
+      <div>
+        <h1 class="text-2xl font-bold text-tinta sm:text-3xl"><%= perfil.apelido %></h1>
+        <p class="text-sm text-tinta-suave">
+          Nível <%= perfil.nivel?.nivel ?? 1 %> ·
+          sessões de <%= perfil.session_minutes %> minutos ·
+          <%= perfil.faixa_etaria_nome ?? 'faixa não definida' %>
+        </p>
+      </div>
+    </div>
+
+    <div class="p-8">
+      <section class="rounded-favo bg-cera p-6">
+        <h2 class="text-lg font-semibold">Meus dias de jogo</h2>
+        <p class="mt-1 text-sm text-tinta-suave">
+          A colmeia só cobra presença nos dias que você escolher, e é isso que decide quantas
+          metas você recebe. Trocar os dias <strong>não apaga</strong> o que você já conquistou:
+          as metas em andamento continuam onde estão.
+        </p>
+
+        <form id="form-disponibilidade" class="mt-6" data-perfil-id="<%= perfil.id %>">
+          <fieldset class="grid gap-3 sm:grid-cols-2">
+            <legend class="sr-only">Dias da semana disponíveis</legend>
+            <% semana.forEach((dia) => { %>
+              <label class="flex cursor-pointer items-center gap-3 rounded-favo border-2 p-4 hover:border-ambar <%= dia.disponivel ? 'border-mel bg-white' : 'border-linha' %>">
+                <input
+                  type="checkbox"
+                  name="dias"
+                  class="h-4 w-4"
+                  value="<%= dia.diaSemana %>"
+                  <%= dia.disponivel ? 'checked' : '' %>
+                />
+                <span class="font-medium capitalize"><%= dia.nome %></span>
+              </label>
+            <% }) %>
+          </fieldset>
+
+          
+          <p
+            id="aviso-disponibilidade"
+            role="status"
+            aria-live="polite"
+            class="mt-4 hidden rounded-lg bg-white px-4 py-3 text-sm"
+          ></p>
+
+          <div class="mt-6 flex items-center gap-4">
+            <button
+              type="submit"
+              id="btn-salvar-dias"
+              class="rounded-pilula bg-mel px-6 py-3 font-semibold text-tinta transition hover:bg-ambar focus:outline-[3px] focus:outline-tinta focus:outline-offset-2"
+            >
+              Salvar meus dias
+            </button>
+            <a href="/painel" class="text-sm font-medium text-tinta underline decoration-ambar decoration-2 underline-offset-4">
+              Voltar ao painel
+            </a>
+          </div>
+        </form>
+      </section>
+
+      <section class="mt-6 rounded-favo bg-cera p-6">
+        <h2 class="text-lg font-semibold">Minhas metas agora</h2>
+        <% if (metas.length === 0) { %>
+          <p class="mt-2 text-sm text-tinta-suave">Nenhuma meta ativa no momento.</p>
+        <% } else { %>
+          <ul class="mt-4 grid gap-3">
+            <% metas.forEach((meta) => { %>
+              <%
+                const alvo = Number(meta.target_value) || 1;
+                const percentual = Math.min(100, Math.round((Number(meta.current_value) / alvo) * 100));
+              %>
+              <li class="rounded-lg bg-white px-4 py-3">
+                <div class="flex items-baseline justify-between gap-4">
+                  <span class="font-medium"><%= meta.title %></span>
+                  <span class="text-sm text-tinta-suave"><%= meta.current_value %> de <%= meta.target_value %></span>
+                </div>
+                <div
+                  class="mt-2 h-2 overflow-hidden rounded-pilula bg-cera"
+                  role="progressbar"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow="<%= percentual %>"
+                  aria-label="Progresso da meta <%= meta.title %>"
+                >
+                  <div class="h-full rounded-pilula bg-mel <%= classeDaBarra(percentual) %>"></div>
+                </div>
+              </li>
+            <% }) %>
+          </ul>
+        <% } %>
+      </section>
+    </div>
+  </div>
+</div>

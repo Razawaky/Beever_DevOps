@@ -1,0 +1,87 @@
+  <header class="bg-mel px-6 py-6">
+    <div class="mx-auto flex max-w-3xl items-center justify-between">
+      <a href="/painel" class="font-semibold text-tinta hover:underline">&larr; Painel</a>
+      <h1 class="text-2xl font-bold">Metas e tarefas</h1>
+      <span></span>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-3xl px-6 py-10">
+              <% if (meta.status === 'ativa') { %>
+            <form method="POST" action="/metas/<%= meta.id %>/concluir" class="mt-4">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              <button
+                type="submit"
+                class="rounded-favo bg-mel px-3 py-1.5 text-xs font-semibold text-tinta transition hover:-translate-y-0.5 hover:bg-nectar active:translate-y-0 active:bg-ambar focus-visible:outline-[3px] focus-visible:outline-ambar focus-visible:outline-offset-2 focus-visible:ring-2 focus-visible:ring-tinta"
+              >
+                Marcar como concluída
+              </button>
+            </form>
+          <% } else if (meta.status === 'expirada') { %>
+            <form method="POST" action="/metas/<%= meta.id %>/renovar" class="mt-4">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              <p class="mb-2 text-xs text-tinta-suave">
+                O prazo passou, mas seu progresso está guardado. Retomar dá prazo novo e rende metade.
+              </p>
+              <button
+                type="submit"
+                class="rounded-favo bg-mel px-3 py-1.5 text-xs font-semibold text-tinta transition hover:-translate-y-0.5 hover:bg-nectar active:translate-y-0 active:bg-ambar focus-visible:outline-[3px] focus-visible:outline-ambar focus-visible:outline-offset-2 focus-visible:ring-2 focus-visible:ring-tinta"
+              >
+                Retomar esta meta
+              </button>
+            </form>
+          <% } else if (meta.status === 'renovada') { %>
+            <p class="mt-4 text-xs font-semibold text-tinta-suave">Retomada em uma meta nova ↓</p>
+          <% } else { %>
+            <p class="mt-4 text-xs font-semibold text-acerto-texto">
+              Concluída ✓ · rendeu <%= meta.reward_coins %> de mel e <%= meta.reward_points %> de pólen
+            </p>
+          <% } %>
+        </section>
+      <% }) %>
+    </div>
+
+    <h2 class="mb-2 text-lg font-semibold">Tarefas de hoje</h2>
+    
+    <p class="mb-4 text-sm text-tinta-suave">A colmeia escolhe as tarefas do dia. Elas avançam sozinhas conforme você joga.</p>
+
+    <h2 class="mb-4 text-lg font-semibold">Minhas tarefas</h2>
+
+    <% if (tarefas.length === 0) { %>
+      <p class="text-tinta-suave">Nenhuma tarefa por enquanto.</p>
+    <% } %>
+
+    <ul class="space-y-2">
+      <% tarefas.forEach((tarefa) => { %>
+        <% const concluida = tarefa.status === 'concluida'; %>
+        <li class="flex items-center justify-between rounded-lg bg-white px-4 py-3 text-sm shadow-sm">
+          <% const cumprida = Number(tarefa.current_value) >= Number(tarefa.target_value); %>
+          <div>
+            <span class="<%= concluida ? 'line-through text-tinta-suave' : '' %> font-medium">
+              <%= tarefa.title %>
+            </span>
+            <span class="ml-2 text-xs text-tinta-suave">
+              <%= tarefa.current_value %>/<%= tarefa.target_value %> ·
+              <%= tarefa.scope %> · prazo <%= new Date(tarefa.due_at).toLocaleDateString('pt-BR') %>
+              · vale <%= tarefa.reward_coins %> de mel e <%= tarefa.reward_points %> de pólen
+            </span>
+          </div>
+          <% if (concluida) { %>
+            <span class="text-xs font-semibold text-acerto-texto">Concluída ✓</span>
+          <% } else if (cumprida) { %>
+            <form method="POST" action="/tarefas/<%= tarefa.id %>/concluir">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              <button
+                type="submit"
+                class="rounded-favo bg-mel px-3 py-1.5 text-xs font-semibold text-tinta transition hover:-translate-y-0.5 hover:bg-nectar active:translate-y-0 active:bg-ambar focus-visible:outline-[3px] focus-visible:outline-ambar focus-visible:outline-offset-2 focus-visible:ring-2 focus-visible:ring-tinta"
+              >
+                Receber recompensa
+              </button>
+            </form>
+          <% } else { %>
+            <span class="text-xs text-tinta-suave">Em andamento</span>
+          <% } %>
+        </li>
+      <% }) %>
+    </ul>
+  </main>

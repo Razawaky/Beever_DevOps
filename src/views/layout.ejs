@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <%- include('partials/head') %>
+  </head>
+  <body class="<%= classeBody %>"<% Object.entries(dadosBody).forEach(([chave, valor]) => { %> data-<%= chave %>="<%= valor %>"<% }) %>>
+    <% if (comCabecalho) { %><%- include('partials/header') %><% } %>
+
+    <%- include(pagina) %>
+
+    <% if (comRodape) { %><%- include('partials/footer') %><% } %>
+    <% scripts.forEach((arquivo) => { %>
+        <script src="<%= arquivo %>" type="module"></script>
+    <% }) %>
+  </body>
+</html>

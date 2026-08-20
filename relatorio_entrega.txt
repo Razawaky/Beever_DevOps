@@ -1,0 +1,38 @@
+RELATORIO DE ENTREGA DOCKER
+Disciplina: DevOps
+Instituicao: FATEC Lins
+
+NOMES DOS INTEGRANTES
+Luan
+Lucas Verdelli
+Vinícius Duarte
+Vinícius Santana
+
+PROJETO
+Beever — plataforma com gamificação focada em educação financeira para
+criancas e adolescentes de 6 a 15 anos.
+
+TECNOLOGIAS
+Node.js 22 (ES Modules)
+Express 5
+EJS renderizado no servidor
+Tailwind CSS (CLI)
+MySQL 8 com driver mysql2 e pool singleton, sem ORM
+express-session com store no MySQL
+bcrypt, helmet, express-validator, express-rate-limit
+pino e pino-http para log estruturado
+Docker com build multi-stage (node:22-slim)
+Arquitetura em camadas: MVC + Service + Repository
+
+PORTA UTILIZADA
+3000 dentro do contendor, publicada como 3000 no host (-p 3000:3000).
+O MySQL usa a porta 3306.
+
+COMANDOS EXECUTADOS
+docker build -t beever:devops .
+docker run --rm --name beever-app --env-file .env -p 3000:3000 beever:devops
+
+DIFICULDADES ENCONTRADAS
+
+Principal dificuldade foi trabalhar com a arquitetura e implementar o motor de recompensa + jogos interativos.
+Implementação de ofensiva e estados de projeto.

@@ -1,0 +1,22 @@
+  <main class="mx-auto max-w-5xl px-6 py-16">
+    <p class="text-sm font-semibold tracking-wide text-tinta-suave"><%= status %></p>
+    
+    <h1 class="mt-2 text-3xl font-bold"><%= mensagem %></h1>
+
+    <a
+      href="/"
+      class="mt-8 inline-block text-tinta underline decoration-ambar decoration-2 underline-offset-4 transition hover:decoration-mel"
+      >Voltar para o início</a
+    >
+
+    
+    <% if (typeof requestId !== 'undefined' && requestId) { %>
+      <p class="mt-8 text-xs text-tinta-suave">
+        Se precisar de ajuda, informe este código: <code class="font-mono"><%= requestId %></code>
+      </p>
+    <% } %>
+
+    <% if (stack) { %>
+      <pre class="mt-10 overflow-x-auto rounded-favo bg-breu p-4 text-xs text-white"><%= stack %></pre>
+    <% } %>
+  </main>

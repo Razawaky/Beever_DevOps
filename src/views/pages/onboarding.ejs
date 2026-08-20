@@ -1,0 +1,45 @@
+<main class="w-full max-w-md">
+  <div class="mb-8">
+    <div class="mb-2 flex justify-between text-xs font-bold uppercase tracking-wide text-tinta-suave">
+      <span id="progress-label">Configuração</span>
+      <span id="progress-text">0%</span>
+    </div>
+    
+    
+    
+    <div class="h-3 overflow-hidden rounded-pilula bg-white">
+      <div
+        id="progress-bar"
+        class="barra-0 h-full bg-mel transition-all duration-500 ease-out"
+        role="progressbar"
+        aria-labelledby="progress-label"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="0"
+      ></div>
+    </div>
+  </div>
+
+  <form id="form-onboarding" class="rounded-favo bg-white p-8 shadow-lg">
+    <div id="etapa-conteudo"></div>
+
+    <p id="erro-onboarding" class="mt-4 hidden text-sm text-erro-texto"></p>
+
+    <div class="mt-8 flex gap-4">
+      <button
+        type="button"
+        id="btn-voltar"
+        class="hidden rounded-favo px-6 py-3 font-bold text-tinta-suave hover:text-tinta"
+      >
+        Voltar
+      </button>
+      <button
+        type="submit"
+        id="btn-avancar"
+        class="flex-1 rounded-favo bg-mel px-6 py-3 font-bold text-tinta transition hover:-translate-y-0.5 hover:bg-nectar active:translate-y-0 active:bg-ambar focus-visible:outline-[3px] focus-visible:outline-ambar focus-visible:outline-offset-2 focus-visible:ring-2 focus-visible:ring-tinta"
+      >
+        Continuar
+      </button>
+    </div>
+  </form>
+</main>

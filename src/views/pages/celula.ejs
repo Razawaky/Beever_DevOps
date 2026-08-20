@@ -1,0 +1,46 @@
+<header class="bg-mel px-6 py-6">
+  <div class="mx-auto max-w-2xl">
+    <a
+      href="/trilha/<%= idFavo %>"
+      class="text-sm font-semibold text-tinta underline decoration-tinta/30 decoration-2 underline-offset-4 hover:decoration-tinta focus-visible:outline-[3px] focus-visible:outline-tinta focus-visible:outline-offset-2"
+      >&larr; Voltar ao favo</a
+    >
+    <h1 class="mt-2 font-display text-2xl text-tinta sm:text-3xl"><%= celula.title %></h1>
+    <p class="mt-1 text-sm text-tinta-suave"><%= celula.game_type_name %></p>
+  </div>
+</header>
+
+<main class="mx-auto max-w-2xl px-6 py-8">
+  <p id="jogo-carregando" class="rounded-favo bg-cera p-6 text-center text-tinta-suave">Preparando a atividade…</p>
+
+  <p
+    id="jogo-erro"
+    class="hidden rounded-favo border-2 border-erro bg-white p-6 text-center font-medium text-erro-texto"
+    role="alert"
+  ></p>
+
+  <section id="jogo-area" class="hidden">
+    <div class="flex items-center justify-between gap-4">
+      <p id="jogo-passo" class="text-sm font-semibold text-tinta-suave"></p>
+      <p id="jogo-repeticao" class="hidden text-xs font-medium text-tinta-suave">
+        Você já concluiu esta célula: repetir rende menos.
+      </p>
+    </div>
+
+    <div
+      class="mt-3 h-3 overflow-hidden rounded-pilula bg-cera"
+      role="progressbar"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="0"
+      aria-label="Progresso da atividade"
+      id="jogo-barra-caixa"
+    >
+      <div id="jogo-barra" class="h-full rounded-pilula bg-mel barra-0"></div>
+    </div>
+
+    <%- include(`../partials/jogos/${areaDoJogo}`) %>
+  </section>
+
+  <%- include('../partials/jogo-resultado') %>
+</main>

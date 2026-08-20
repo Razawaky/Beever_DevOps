@@ -1,0 +1,48 @@
+  <header class="bg-mel px-6 py-6">
+    <div class="mx-auto flex max-w-5xl items-center justify-between">
+      <a href="/painel" class="font-semibold text-tinta hover:underline">&larr; Painel</a>
+      <h1 class="text-2xl font-bold">Loja</h1>
+      <p class="font-semibold">🍯 <%= perfil.mel %> de mel</p>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-5xl px-6 py-10">
+    <% if (itens.length === 0) { %>
+      <p class="text-tinta-suave">Nenhum item disponível no momento.</p>
+    <% } %>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <% itens.forEach((item) => { %>
+        <% const possuido = possuidos.has(Number(item.id)); %>
+        <% const podeComprar = perfil.mel >= Number(item.price); %>
+        <article class="flex flex-col justify-between rounded-favo bg-white p-6 shadow-md">
+          <div>
+            <span class="text-xs font-semibold uppercase tracking-wide text-tinta-suave"><%= item.category_name %></span>
+            <h2 class="mt-1 text-lg font-bold"><%= item.name %></h2>
+            <p class="mt-2 text-sm text-tinta-suave"><%= item.description_kid %></p>
+          </div>
+
+          <div class="mt-6 flex items-center justify-between">
+            <span class="font-semibold">🍯 <%= item.price %></span>
+
+            <% if (possuido) { %>
+              <span class="rounded-pilula bg-cera px-4 py-2 text-sm font-medium text-tinta-suave">Já possui</span>
+            <% } else { %>
+              <form method="POST" action="/loja/compras">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                <input type="hidden" name="idItem" value="<%= item.id %>" />
+                <input type="hidden" name="chaveDeIdempotencia" value="<%= chaveDeCompra %>" />
+                <button
+                  type="submit"
+                  <%= podeComprar ? '' : 'disabled' %>
+                  class="rounded-favo bg-mel px-4 py-2 text-sm font-semibold text-tinta transition hover:-translate-y-0.5 hover:bg-nectar active:translate-y-0 active:bg-ambar focus-visible:outline-[3px] focus-visible:outline-ambar focus-visible:outline-offset-2 focus-visible:ring-2 focus-visible:ring-tinta disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  <%= podeComprar ? 'Comprar' : 'Sem mel' %>
+                </button>
+              </form>
+            <% } %>
+          </div>
+        </article>
+      <% }) %>
+    </div>
+  </main>

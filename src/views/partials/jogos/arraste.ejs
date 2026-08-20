@@ -1,0 +1,26 @@
+<h2 id="arraste-enunciado" tabindex="-1" class="mt-6 font-display text-xl text-tinta" aria-live="polite"></h2>
+
+<p class="mt-2 text-sm text-tinta-suave">
+  Arraste a carta até a caixa certa. Se preferir, toque na carta e depois na caixa — pelo teclado, use Tab e Enter.
+</p>
+
+<p id="arraste-aviso" class="sr-only" role="status" aria-live="polite"></p>
+
+<section aria-labelledby="arraste-monte-titulo" class="mt-6">
+  <h3 id="arraste-monte-titulo" class="text-sm font-semibold text-tinta-suave">Cartas para classificar</h3>
+  <ul
+    id="arraste-monte"
+    class="mt-3 flex min-h-24 flex-col gap-3 rounded-favo border-2 border-dashed border-linha bg-white p-3"
+  ></ul>
+</section>
+
+<div id="arraste-caixas" class="mt-6 grid gap-4 sm:grid-cols-2"></div>
+
+<button
+  id="arraste-terminar"
+  type="button"
+  disabled
+  class="mt-6 w-full rounded-favo bg-mel px-6 py-3 font-semibold text-tinta transition hover:bg-nectar focus-visible:outline-[3px] focus-visible:outline-tinta focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-40"
+>
+  Terminar
+</button>

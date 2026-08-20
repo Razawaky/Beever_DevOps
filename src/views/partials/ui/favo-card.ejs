@@ -1,0 +1,76 @@
+<% const aberto = favo.estado === 'disponivel'; %>
+<% const concluido = favo.concluido; %>
+<%
+  const preenchimento = concluido ? 'bg-ambar' : aberto ? 'bg-mel' : 'bg-linha';
+  const rotuloDeEstado = concluido ? 'concluído' : aberto ? 'disponível' : 'bloqueado';
+%>
+
+<article class="favo-passo flex items-center gap-4">
+  <% if (aberto || concluido) { %>
+    <a
+      href="/trilha/<%= favo.id %>"
+      class="favo-hexagono <%= preenchimento %> group relative flex h-24 w-24 shrink-0 items-center justify-center focus-visible:outline-[3px] focus-visible:outline-ambar focus-visible:outline-offset-4"
+      aria-label="Abrir favo <%= favo.title %> — <%= rotuloDeEstado %>, <%= favo.percentual %>% concluído"
+    >
+      <span class="font-display text-3xl text-tinta"><%= favo.order_index %></span>
+      <% if (concluido) { %>
+        <svg class="absolute -bottom-1 h-7 w-7" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path
+            fill="currentColor"
+            stroke-linejoin="round"
+            class="text-nectar"
+            d="M12 2.5l2.9 5.9 6.5.95-4.7 4.6 1.1 6.45L12 17.35 6.2 20.4l1.1-6.45-4.7-4.6 6.5-.95L12 2.5z"
+          />
+        </svg>
+      <% } %>
+    </a>
+  <% } else { %>
+    <div
+      class="favo-hexagono <%= preenchimento %> flex h-24 w-24 shrink-0 items-center justify-center"
+      role="img"
+      aria-label="Favo <%= favo.title %> bloqueado"
+    >
+      <svg class="h-8 w-8 text-tinta-suave" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path
+          fill="currentColor"
+          stroke-linejoin="round"
+          d="M12 2a5 5 0 00-5 5v3H6a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2v-8a2 2 0 00-2-2h-1V7a5 5 0 00-5-5zm0 2a3 3 0 013 3v3H9V7a3 3 0 013-3zm0 10a2 2 0 011 3.73V19a1 1 0 11-2 0v-1.27A2 2 0 0112 14z"
+        />
+      </svg>
+    </div>
+  <% } %>
+
+  <div class="min-w-0">
+    <h3 class="font-display text-xl <%= aberto || concluido ? 'text-tinta' : 'text-tinta-suave' %>">
+      <%= favo.title %>
+    </h3>
+
+    <% if (favo.description) { %>
+      <p class="mt-0.5 text-sm text-tinta-suave"><%= favo.description %></p>
+    <% } %>
+
+    <% if (aberto || concluido) { %>
+      <div
+        class="mt-2 h-2 w-40 overflow-hidden rounded-pilula bg-cera"
+        role="progressbar"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="<%= favo.percentual %>"
+        aria-label="Progresso do favo <%= favo.title %>"
+      >
+        <div class="h-full rounded-pilula bg-mel <%= classeDaBarra(favo.percentual) %>"></div>
+      </div>
+      <p class="mt-1 text-xs text-tinta-suave">
+        <%= favo.celulasConcluidas %> de <%= favo.celulasTotais || '?' %> células · <%= favo.percentual %>%
+      </p>
+    <% } else { %>
+      
+      <p class="mt-2 flex items-center gap-1.5 text-sm font-medium text-atencao-texto">
+        <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M12 2a5 5 0 00-5 5v3H6a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2v-8a2 2 0 00-2-2h-1V7a5 5 0 00-5-5zm0 2a3 3 0 013 3v3H9V7a3 3 0 013-3z" />
+        </svg>
+        <%= favo.motivo %>
+      </p>
+    <% } %>
+  </div>
+</article>

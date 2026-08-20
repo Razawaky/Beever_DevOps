@@ -1,0 +1,107 @@
+<header class="bg-mel px-6 py-6">
+  <div class="mx-auto max-w-3xl">
+    <a
+      href="/trilha"
+      class="text-sm font-semibold text-tinta underline decoration-tinta/30 decoration-2 underline-offset-4 hover:decoration-tinta focus-visible:outline-[3px] focus-visible:outline-tinta focus-visible:outline-offset-2"
+      >&larr; Trilha</a
+    >
+    <h1 class="mt-2 font-display text-2xl text-tinta sm:text-3xl"><%= favo.title %></h1>
+    <% if (favo.description) { %>
+      <p class="mt-1 text-sm text-tinta-suave"><%= favo.description %></p>
+    <% } %>
+  </div>
+</header>
+
+<main class="mx-auto max-w-3xl px-6 py-10">
+  <section class="rounded-favo bg-cera p-6">
+    <div class="flex items-center justify-between gap-4">
+      <h2 class="font-display text-lg">Progresso do favo</h2>
+      <p class="text-sm font-semibold"><%= favo.percentual %>%</p>
+    </div>
+    <div
+      class="mt-3 h-3 overflow-hidden rounded-pilula bg-white"
+      role="progressbar"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="<%= favo.percentual %>"
+      aria-label="Progresso do favo <%= favo.title %>"
+    >
+      <div class="h-full rounded-pilula bg-mel <%= classeDaBarra(favo.percentual) %>"></div>
+    </div>
+    <p class="mt-2 text-sm text-tinta-suave">
+      <%= favo.celulasConcluidas %> de <%= favo.celulasTotais || celulas.length %> células concluídas
+    </p>
+  </section>
+
+  <h2 class="mb-4 mt-8 font-display text-lg">Células</h2>
+
+  <ol class="space-y-4">
+    <% celulas.forEach((celula) => { %>
+      <% const aberta = celula.estado === 'disponivel' || celula.estado === 'concluido'; %>
+      <li>
+        <%
+          const moldura = celula.concluida
+            ? 'border-ambar bg-white'
+            : aberta
+              ? 'border-mel bg-white'
+              : 'border-linha bg-white/60';
+        %>
+        <div class="flex items-center gap-4 rounded-favo border-2 <%= moldura %> p-4">
+          <div
+            class="favo-hexagono <%= celula.concluida ? 'bg-ambar' : aberta ? 'bg-mel' : 'bg-linha' %> flex h-14 w-14 shrink-0 items-center justify-center"
+            aria-hidden="true"
+          >
+            <span class="font-display text-lg text-tinta"><%= celula.order_index %></span>
+          </div>
+
+          <div class="min-w-0 flex-1">
+            <h3 class="font-semibold <%= aberta ? 'text-tinta' : 'text-tinta-suave' %>"><%= celula.title %></h3>
+            <p class="text-xs text-tinta-suave">
+              <%= celula.game_type_name %> · cerca de <%= Math.round(celula.estimated_seconds / 60) %> min
+            </p>
+
+            <% if (celula.concluida) { %>
+              <p class="mt-1 flex items-center gap-1 text-sm text-acerto-texto">
+                <span class="sr-only"><%= celula.stars %> de 3 estrelas</span>
+                <% for (let i = 1; i <= 3; i += 1) { %>
+                  <svg
+                    class="h-4 w-4 <%= i <= celula.stars ? 'text-mel' : 'text-linha' %>"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <path
+                      fill="currentColor"
+                      stroke-linejoin="round"
+                      d="M12 2.5l2.9 5.9 6.5.95-4.7 4.6 1.1 6.45L12 17.35 6.2 20.4l1.1-6.45-4.7-4.6 6.5-.95L12 2.5z"
+                    />
+                  </svg>
+                <% } %>
+                concluída
+              </p>
+            <% } else if (celula.motivo) { %>
+              
+              <p class="mt-1 flex items-center gap-1.5 text-sm font-medium text-atencao-texto">
+                <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path fill="currentColor" d="M12 2a5 5 0 00-5 5v3H6a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2v-8a2 2 0 00-2-2h-1V7a5 5 0 00-5-5zm0 2a3 3 0 013 3v3H9V7a3 3 0 013-3z" />
+                </svg>
+                <%= celula.motivo %>
+              </p>
+            <% } %>
+          </div>
+
+          <% if (aberta && celula.temConteudo && celula.temJogo) { %>
+            <a
+              href="/trilha/<%= favo.id %>/celula/<%= celula.id %>"
+              class="shrink-0 rounded-pilula bg-mel px-5 py-2.5 text-sm font-semibold text-tinta transition hover:bg-nectar focus-visible:outline-[3px] focus-visible:outline-tinta focus-visible:outline-offset-2"
+            >
+              <%= celula.concluida ? 'Repetir' : 'Jogar' %>
+            </a>
+          <% } else if (aberta) { %>
+            <span class="shrink-0 rounded-pilula bg-linha px-4 py-2 text-xs font-medium text-tinta-suave">em breve</span>
+          <% } %>
+        </div>
+      </li>
+    <% }) %>
+  </ol>
+</main>

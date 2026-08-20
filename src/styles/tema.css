@@ -1,0 +1,135 @@
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+  }
+}
+@layer utilities {
+  .hexagon {
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+@keyframes float-up {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-30px) scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-60px) scale(1);
+  }
+}
+.floating-indicator {
+  animation: float-up 1.5s ease-out forwards;
+}
+@keyframes wing-flap {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+}
+.animate-wing-left {
+  animation: wing-flap 0.3s ease-in-out infinite;
+  transform-origin: right center;
+}
+.animate-wing-right {
+  animation: wing-flap 0.3s ease-in-out infinite reverse;
+  transform-origin: left center;
+}
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.toast {
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  min-width: 250px;
+  animation: slideIn 0.3s ease-out;
+}
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .floating-indicator,
+  .animate-wing-left,
+  .animate-wing-right,
+  .toast {
+    animation: none;
+  }
+}
+.barra-0 { width: 0%; }
+.barra-5 { width: 5%; }
+.barra-10 { width: 10%; }
+.barra-15 { width: 15%; }
+.barra-20 { width: 20%; }
+.barra-25 { width: 25%; }
+.barra-30 { width: 30%; }
+.barra-35 { width: 35%; }
+.barra-40 { width: 40%; }
+.barra-45 { width: 45%; }
+.barra-50 { width: 50%; }
+.barra-55 { width: 55%; }
+.barra-60 { width: 60%; }
+.barra-65 { width: 65%; }
+.barra-70 { width: 70%; }
+.barra-75 { width: 75%; }
+.barra-80 { width: 80%; }
+.barra-85 { width: 85%; }
+.barra-90 { width: 90%; }
+.barra-95 { width: 95%; }
+.barra-100 { width: 100%; }
+.estrela {
+  display: inline-block;
+}
+.estrela-ganha {
+  opacity: 0;
+  animation: estrela-surge 0.4s ease-out forwards;
+}
+.estrela-ganha.estrela-2 {
+  animation-delay: 0.2s;
+}
+.estrela-ganha.estrela-3 {
+  animation-delay: 0.4s;
+}
+@keyframes estrela-surge {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .estrela-ganha {
+    opacity: 1;
+    animation: none;
+  }
+}

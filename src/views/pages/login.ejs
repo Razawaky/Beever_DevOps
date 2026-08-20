@@ -1,0 +1,57 @@
+  <div class="flex min-h-screen flex-col md:flex-row">
+    <div class="relative hidden flex-1 flex-col items-center justify-center bg-mel p-8 md:flex">
+      <img src="/img/beenie_login_render.png" alt="" class="h-auto w-3/4 max-w-md" />
+      <img src="/img/beever_logo_black.png" alt="Beever" class="absolute bottom-12 h-8 w-auto" />
+    </div>
+
+    <div class="flex flex-1 items-center justify-center p-8">
+      <div class="w-full max-w-sm">
+        <a href="/" class="text-sm text-tinta-suave hover:text-tinta">&larr; Voltar</a>
+
+        <h1 class="mt-6 text-3xl font-bold">Entrar</h1>
+        <p class="mt-2 text-tinta-suave">Digite seu e-mail e senha para entrar na conta.</p>
+
+        <form method="POST" action="/sessao/login" class="mt-8 space-y-4">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+
+          <div>
+            <label for="email" class="mb-1 block text-sm font-medium">E-mail</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              autocomplete="email"
+              placeholder="nome@exemplo.com"
+              class="w-full rounded-lg border border-linha px-4 py-3 text-sm focus:border-mel focus:outline-[3px] focus:outline-ambar focus:outline-offset-2 focus:ring-2 focus:ring-tinta"
+            />
+          </div>
+
+          <div>
+            <label for="senha" class="mb-1 block text-sm font-medium">Senha</label>
+            <input
+              id="senha"
+              name="senha"
+              type="password"
+              required
+              autocomplete="current-password"
+              placeholder="Sua senha"
+              class="w-full rounded-lg border border-linha px-4 py-3 text-sm focus:border-mel focus:outline-[3px] focus:outline-ambar focus:outline-offset-2 focus:ring-2 focus:ring-tinta"
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="w-full rounded-favo bg-mel px-4 py-3 font-semibold text-tinta transition hover:-translate-y-0.5 hover:bg-nectar active:translate-y-0 active:bg-ambar focus-visible:outline-[3px] focus-visible:outline-ambar focus-visible:outline-offset-2 focus-visible:ring-2 focus-visible:ring-tinta"
+          >
+            Entrar
+          </button>
+        </form>
+
+        <p class="mt-6 text-center text-sm text-tinta-suave">
+          Não tem uma conta?
+          <a href="/cadastro" class="font-medium text-tinta underline decoration-ambar decoration-2 underline-offset-4 transition hover:decoration-mel">Cadastre-se</a>
+        </p>
+      </div>
+    </div>
+  </div>

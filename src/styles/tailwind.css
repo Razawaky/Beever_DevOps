@@ -1,0 +1,25 @@
+@import 'tailwindcss';
+@import './tema.css';
+@import './trilha.css';
+@source '../views*.ejs';
+@source '../public/js*.js';
+@theme {
+  --color-mel: #ffc200;
+  --color-nectar: #ffde00;
+  --color-ambar: #f4b73e;
+  --color-cera: #fffdf7;
+  --color-breu: #111111;
+  --color-linha: #e8e2d6;
+  --color-tinta: #000000;
+  --color-tinta-suave: #4a4a4a;
+  --color-acerto: #2e9e4f;
+  --color-acerto-texto: #268044;
+  --color-atencao: #e07a1f;
+  --color-atencao-texto: #9e5309;
+  --color-erro: #d93a3a;
+  --color-erro-texto: #c42b2b;
+  --font-sans: Nunito, system-ui, sans-serif;
+  --font-display: 'Lilita One', system-ui, sans-serif;
+  --radius-favo: 20px;
+  --radius-pilula: 999px;
+}

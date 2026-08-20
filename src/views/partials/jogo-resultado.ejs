@@ -1,0 +1,47 @@
+<section id="jogo-resultado" class="hidden text-center" aria-live="polite">
+  <img
+    id="jogo-mascote"
+    src="/img/beenie_howdy.png"
+    alt=""
+    class="mx-auto h-32 w-32 object-contain animate-float"
+  />
+
+  <h2 id="jogo-resultado-titulo" class="mt-2 font-display text-2xl text-tinta"></h2>
+
+    <p id="jogo-estrelas" class="mt-3 flex justify-center gap-2"></p>
+
+  <dl class="mx-auto mt-6 grid max-w-sm grid-cols-3 gap-3">
+    <div class="rounded-favo bg-cera p-3">
+      <dt class="text-xs font-semibold text-tinta-suave">XP</dt>
+      <dd id="jogo-xp" class="font-display text-xl text-tinta tabular-nums">0</dd>
+    </div>
+    <div class="rounded-favo bg-cera p-3">
+      <dt class="text-xs font-semibold text-tinta-suave">Pólen</dt>
+      <dd id="jogo-polen" class="font-display text-xl text-tinta tabular-nums">0</dd>
+    </div>
+    <div class="rounded-favo bg-cera p-3">
+      <dt class="text-xs font-semibold text-tinta-suave">Mel</dt>
+      <dd id="jogo-mel" class="font-display text-xl text-tinta tabular-nums">0</dd>
+    </div>
+  </dl>
+
+  <p id="jogo-nivel" class="mt-4 hidden font-semibold text-acerto-texto"></p>
+
+    <p id="jogo-repeticao-aviso" class="mt-3 hidden text-sm text-tinta-suave">
+    Esta célula já estava concluída: repetir rende XP reduzido e não paga mel nem pólen.
+  </p>
+
+  <a
+    id="jogo-continuar"
+    href="/trilha/<%= idFavo %>"
+    class="mt-6 inline-block w-full rounded-favo bg-mel px-6 py-3 font-semibold text-tinta transition hover:bg-nectar focus-visible:outline-[3px] focus-visible:outline-tinta focus-visible:outline-offset-2"
+    >Voltar ao favo</a
+  >
+
+  <a
+    id="jogo-voltar-ao-favo"
+    href="/trilha/<%= idFavo %>"
+    class="mt-3 hidden text-sm font-semibold text-tinta underline decoration-tinta/30 decoration-2 underline-offset-4 hover:decoration-tinta focus-visible:outline-[3px] focus-visible:outline-tinta focus-visible:outline-offset-2"
+    >Voltar ao favo</a
+  >
+</section>
