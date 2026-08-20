@@ -105,3 +105,11 @@ As credenciais internas padrão são usuário `beever` / senha `beever` e `root`
 Dá pra trocar passando as variáveis `MYSQL_DATABASE`, `MYSQL_USER`, `MYSQL_PASSWORD` e `MYSQL_ROOT_PASSWORD` no `docker run`
 
 Usuário de demonstração do sistema: `admin@beever.dev` / `admin1234`
+
+![print-http](print-http.png)
+
+![docker-ps](docker-ps.png)
+
+![log1](log1.png)
+
+![log2](log2.png)
